@@ -29,6 +29,7 @@ if( typeof module !== 'undefined' )
 }
 
 var _ = wTools;
+var Parent = wTools.Testing;
 var Self = {};
 
 //
@@ -190,7 +191,7 @@ var Proto =
 //
 
 _.mapExtend( Self,Proto );
-
+_.Testing.register( Self );
 if( typeof module !== 'undefined' && !module.parent )
 _.Testing.test( Self );
 
