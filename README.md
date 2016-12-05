@@ -74,13 +74,14 @@ console.log( l.toJson() );
 ```
 ##### Example #3
 ```javascript
-/*Console as output*/
+/*wLogger as output*/
+var logger = new wLogger();
 var l = new wLoggerToJstructure
 ({
-  output : console
+  output : logger
 });
 l.log( 'abc' );
-/*console prints
+/*logger prints
 abc
 */
 ```
