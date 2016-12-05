@@ -1,11 +1,86 @@
-# wLogger
-Module in JavaScript providing convenient, layered, cross-platform means for multilevel, colorful logging.
+# wLoggerToJstructure
+Module in JavaScript providing convenient, layered, logging into data structure.
+
+## wLoggerToJstructure
+Logger that writes messages( incoming & outgoing ) to data structure( array of arrays ) specified by( outputData ).
+Each inner array represent new level of the structure. On write logger puts messages into structure level which is equal to logger level property value.
+If needed level not exists logger creates it. Next level is always placed at zero index of previous.Then transfers message to the next output(s) object in the chain if it exists.
 
 
+## Installation
+```terminal
+npm install wLoggerToJstructure
+```
+## Usage
+### Options
+* outputData { array }[ optional ] - structure where to write messages, creates own structure by default.
+* output { object }[ optional ] - single output object for current logger, null by default.
 
+### Methods
+Output:
+* log
+* error
+* info
+* warn
 
+Leveling:
+*  Increase current level - [up](https://rawgit.com/Wandalen/wLogger/master/doc/reference/wPrinterBase.html#.up)
+*  Decrease current level - [down](https://rawgit.com/Wandalen/wLogger/master/doc/reference/wPrinterBase.html#.down)
 
+Chaining:
+*  Add object to output list - [outputTo](https://rawgit.com/Wandalen/wLogger/master/doc/reference/wPrinterBase.html#.outputTo)
+*  Remove object from output list - [outputToUnchain](https://rawgit.com/Wandalen/wLogger/master/doc/reference/wPrinterBase.html#.outputToUnchain)
+*  Add current logger to target's output list - [inputFrom](https://rawgit.com/Wandalen/wLogger/master/doc/reference/wPrinterBase.html#.inputFrom)
+*  Remove current logger from target's output list - [inputFromUnchain](https://rawgit.com/Wandalen/wLogger/master/doc/reference/wPrinterBase.html#.inputFromUnchain)
 
+Other:
+* Convert data structure to json string - [toJson](https://rawgit.com/Wandalen/wLoggerToJstructure/master/doc/reference/wLoggerToJstructure.html#.toJson)
 
+##### Example #1
+```javascript
+/*Logging to specified data structure*/
+var data = [];
+var l = new wLoggerToJstructure
+({
+  outputData : data
+});
+/*Increase current level( 0 ) by 2*/
+l.up( 2 );
+l.log( 'aa\nbb' );
+console.log( data );
+/*
+[
+  [
+    [ 'aa\nbb' ]  
+  ]
+]
+*/
+```
+##### Example #2
+```javascript
+/*Console as input*/
+var l = new wLoggerToJstructure();
+l.inputFrom( console );
+/*Increase current level by 1*/
+l.up( 1 );
+console.log( 'aabb' );
 
-
+console.log( l.toJson() );
+/*
+[
+  [ 'aabb' ]
+]
+*/
+```
+##### Example #3
+```javascript
+/*Console as output*/
+var l = new wLoggerToJstructure
+({
+  output : console
+});
+l.log( 'abc' );
+/*console prints
+abc
+*/
+```
