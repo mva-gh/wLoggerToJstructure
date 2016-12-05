@@ -1,0 +1,56 @@
+{
+  "name": "wLogger",
+  "version": "0.3.10",
+  "description": "Module in JavaScript providing convenient, layered, cross-platform means for multilevel, colorful logging",
+  "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
+  "contributors": [
+    {
+      "name": "Kostiantyn Wandalen",
+      "email": "wtory.net@domainsbyproxy.com>"
+    },
+    {
+      "name": "Volodymyr M.",
+      "email": "volodymyr.migdal@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "main": "staging/abase/object/printer/printer/Logger.s",
+  "files": [
+    "staging/abase",
+    "production"
+  ],
+  "directories": {
+    "doc": "doc",
+    "main": "staging/abase/object/printer/printer/Logger.s"
+  },
+  "scripts": {
+    "test": "node ./staging/abase/z.test/All.backend.test.s",
+    "make_doc": "./doc.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wLogger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wandalen/wLogger/issues"
+  },
+  "dependencies": {
+    "wTools": "",
+    "wCopyable": "",
+    "wColor": "",
+    "wFiles": ""
+  },
+  "devDependencies": {
+    "wTesting": ""
+  },
+  "keywords": [
+    "wTools",
+    "logger",
+    "logging",
+    "log",
+    "colorful log",
+    "multilevel log",
+    "colors",
+    "color"
+  ]
+}
