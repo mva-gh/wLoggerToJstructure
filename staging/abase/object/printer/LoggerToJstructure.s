@@ -8,7 +8,7 @@ if( typeof module !== 'undefined' )
 {
 
   if( typeof wLogger === 'undefined' )
-  require( './Logger.s' )
+  require( 'wLogger' )
 
 }
 
@@ -72,7 +72,7 @@ var symbolForLevel = Symbol.for( 'level' );
  */
 
 var _ = wTools;
-var Parent = wLogger;
+var Parent = wPrinterBase;
 var Self = function wLoggerToJstructure()
 {
   if( !( this instanceof Self ) )
