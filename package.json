@@ -1,6 +1,6 @@
 {
-  "name": "wLoggerToJstructure",
-  "version": "0.3.10",
+  "name": "wloggertojstructure",
+  "version": "0.3.4",
   "description": "Module in JavaScript providing convenient, layered, cross-platform means for multilevel, colorful logging",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
   "contributors": [
@@ -43,6 +43,8 @@
     "wTesting": ""
   },
   "keywords": [
+    "record console output",
+    "store console output into array",
     "wTools",
     "logger",
     "logging",
