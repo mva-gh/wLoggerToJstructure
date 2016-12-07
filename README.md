@@ -56,14 +56,14 @@ console.log( l.outputData );
 ```
 ##### Example #2
 ```javascript
-/* Console as input */
+/* console as input to store it into arrays */
 var l = new wLoggerToJstructure();
 l.inputFrom( console );
-/*Increase current level by 1*/
+/* Increase current level by 1 */
 l.up( 1 );
 console.log( 'aabb' );
-
 console.log( l.toJson() );
+/* record console output */
 /*
 [
   [ 'aabb' ]
@@ -83,6 +83,4 @@ l.log( 'abc' );
 abc
 */
 ```
-
-
 
