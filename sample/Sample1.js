@@ -1,16 +1,28 @@
-
-
 if( typeof module !== 'undefined' )
-require( 'wLogger' );
+require( '../staging/abase/object/printer/LoggerToJstructure.s' );
 
 var _ = wTools;
+var logger = new wLoggerToJstructure();
 
-var logger = new wLogger();
+console.log( 'outputData',logger.outputData );
 
-logger.logUp( 'up' );
-logger.log( 'log' );
-logger.log( 'log\nlog' );
-logger.log( 'log','a','b' );
-logger.log( 'log\nlog','a','b' );
-logger.log( 'log\nlog','a\n','b\n' );
-logger.logDown( 'down' );
+logger._dprefix = '-';
+logger.log( 'a1\nb1' );
+logger.log( 'c1' );
+logger.up( 2 );
+logger.log( 'a2\nb2' );
+logger.log( 'c2' );
+logger.level = 0;
+logger.log( 'c1' );
+
+console.log( 'outputData',logger.outputData );
+console.log( logger.toJson() );
+
+// [
+//   [
+//     [ "a2\nb2", "c2" ]
+//   ],
+//   "a1\nb1",
+//   "c1",
+//   "c1"
+// ]

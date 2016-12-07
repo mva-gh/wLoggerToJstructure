@@ -15,10 +15,7 @@ node ./staging/abase/z.test/LoggerToJstructure.test.s
 if( typeof module !== 'undefined' )
 {
 
-  require( 'wTools' );
-  require( '../object/printer/printer/Logger.s' );
-  require( '../../../../wTools/staging/abase/component/StringTools.s' );
-  require( '../object/printer/printer/LoggerToJstructure.s' );
+  require( '../object/printer/LoggerToJstructure.s' );
 
   try
   {
@@ -187,7 +184,7 @@ var Proto =
 
   },
 
-  /* verbose : 1, */
+  verbose : 1,
 
 }
 

@@ -1,5 +1,5 @@
 {
-  "name": "wLogger",
+  "name": "wLoggerToJstructure",
   "version": "0.3.10",
   "description": "Module in JavaScript providing convenient, layered, cross-platform means for multilevel, colorful logging",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
@@ -14,31 +14,30 @@
     }
   ],
   "license": "MIT",
-  "main": "staging/abase/object/printer/printer/Logger.s",
+  "main": "staging/abase/object/printer/LoggerToJstructure.s",
   "files": [
     "staging/abase",
     "production"
   ],
   "directories": {
     "doc": "doc",
-    "main": "staging/abase/object/printer/printer/Logger.s"
+    "main": "staging/abase/object/printer/LoggerToJstructure.s"
   },
   "scripts": {
-    "test": "node ./staging/abase/z.test/All.backend.test.s",
+    "test": "node ./staging/abase/z.test/LoggerToJstructure.test.s",
     "make_doc": "./doc.sh"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Wandalen/wLogger.git"
+    "url": "https://github.com/Wandalen/wLoggerToJstructure.git"
   },
   "bugs": {
-    "url": "https://github.com/Wandalen/wLogger/issues"
+    "url": "https://github.com/Wandalen/wLoggerToJstructure/issues"
   },
   "dependencies": {
     "wTools": "",
     "wCopyable": "",
-    "wColor": "",
-    "wFiles": ""
+    "wLogger": ""
   },
   "devDependencies": {
     "wTesting": ""
