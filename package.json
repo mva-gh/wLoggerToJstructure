@@ -1,5 +1,5 @@
 {
-  "name": "wLoggerToJstructure",
+  "name": "wloggertojstructure",
   "version": "0.3.1",
   "description": "Module in JavaScript providing convenient, layered, cross-platform means for multilevel, colorful logging",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
