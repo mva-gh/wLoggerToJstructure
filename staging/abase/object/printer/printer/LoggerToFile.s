@@ -6,9 +6,8 @@
 
 if( typeof module !== 'undefined' )
 {
-
   if( typeof wLogger === 'undefined' )
-  require( './Logger.s' );
+  require( 'wLogger' )
 
   if( !wTools.FileProvider  )
   try
@@ -51,7 +50,7 @@ if( typeof module !== 'undefined' )
  *
  * @example
  * var path = __dirname +'/out.txt';
- * var l = new wLoggerToJstructure({ outputPath : path });
+ * var l = new wLoggerToFile({ outputPath : path });
  * var File = _.FileProvider.HardDrive();
  * l.log( '1' );
  * FilefileReadAct
@@ -63,7 +62,7 @@ if( typeof module !== 'undefined' )
  *
  * @example
  * var path = __dirname +'/out2.txt';
- * var l = new wLoggerToJstructure({ outputPath : path });
+ * var l = new wLoggerToFile({ outputPath : path });
  * vae l2 = new wLogger({ output : l });
  * var File = _.FileProvider.HardDrive();
  * l2.log( '1' );
@@ -77,8 +76,7 @@ if( typeof module !== 'undefined' )
  */
 
 var _ = wTools;
-//var Parent = wPrinterMid;
-var Parent = wLogger;
+var Parent = wPrinterBase;
 var Self = function wLoggerToFile()
 {
   if( !( this instanceof Self ) )
@@ -97,36 +95,13 @@ var init = function( o )
 
   Parent.prototype.init.call( self,o );
 
-  debugger;
   if( typeof __dirname !== 'undefined' )
   self.outputPath = _.pathJoin( _.pathBaseDir(),self.outputPath );
-
-  // what is it for?
-  // if( self.output )
-  // self.outputTo( self.output );
 
   if( !self.fileProvider )
   self.fileProvider = _.FileProvider.HardDrive();
 
 }
-
-//
-
-// var init_static = function()
-// {
-//   var proto = this;
-//   _.assert( Object.hasOwnProperty.call( proto,'constructor' ) );
-//
-//   for( var m = 0 ; m < proto.outputWriteMethods.length ; m++ )
-//   proto._init_static( proto.outputWriteMethods[ m ] );
-//
-//   // for( var m = 0 ; m < proto.outputChangeLevelMethods.length ; m++ )
-//   // {
-//   //   var name = proto.outputChangeLevelMethods[ m ];
-//   //   proto[ name ] = null;
-//   // }
-//
-// }
 
 //
 
@@ -160,9 +135,6 @@ var _writeToFile = function ( )
   _.assert( arguments.length );
   _.assert( _.strIs( self.outputPath ),'outputPath is not defined for LoggerToFile' );
 
-  // if( !self.fileProvider )
-  // self.fileProvider = _.FileProvider.HardDrive();
-
   var data = _.strConcat.apply( { },arguments ) + '\n';
 
   self.fileProvider.fileWriteAct
@@ -174,14 +146,6 @@ var _writeToFile = function ( )
   });
 
 }
-
-//
-
-var up = function(){};
-
-//
-
-var down = function(){};
 
 // --
 // relationships
@@ -210,12 +174,9 @@ var Proto =
 
   init : init,
 
-  // init_static : init_static,
   _init_static : _init_static,
 
   _writeToFile : _writeToFile,
-  // up : up,
-  // down : down,
 
   // relationships
 
