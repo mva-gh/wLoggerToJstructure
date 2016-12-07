@@ -91,30 +91,9 @@ var init = function( o )
 
   Parent.prototype.init.call( self,o );
 
-  // for( var m = 0 ; m < self.outputChangeLevelMethods.length ; m++ )
-  // {
-  //   var nameAct = self.outputChangeLevelMethods[ m ] + 'Act';
-  //   self[ nameAct ] = function() {};
-  // }
-
   self.currentContainer = self.outputData;
 
-  // if( self.output )
-  // self.outputTo( self.output );
-
 }
-
-//
-
-// var init_static = function()
-// {
-//   var proto = this;
-//   _.assert( Object.hasOwnProperty.call( proto,'constructor' ) );
-//
-//   for( var m = 0 ; m < proto.outputWriteMethods.length ; m++ )
-//   proto._init_static( proto.outputWriteMethods[ m ] );
-//
-// }
 
 //
 
@@ -174,20 +153,17 @@ var _levelSet = function( level )
 
   var dLevel = level - self[ symbolForLevel ];
 
-  // !!! call somewhere
   Parent.prototype._levelSet.call( self,level );
 
   if( dLevel > 0 )
   {
-    // self.upAct( +dLevel );
     self.currentContainer = _changeLevel( self.currentContainer, +dLevel );
   }
   else if( dLevel < 0 )
   {
-    // self.downAct( -dLevel );
     self.currentContainer = _changeLevel( self.outputData, level );
   }
-  // self[ symbolForLevel ] = level ;
+
 }
 
 //
@@ -247,7 +223,6 @@ var Proto =
 {
 
   init : init,
-  //init_static : init_static,
   _init_static : _init_static,
 
   _writeToStruct : _writeToStruct,
