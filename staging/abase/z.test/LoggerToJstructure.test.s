@@ -167,6 +167,40 @@ var chaining = function( test )
   ];
   test.identical( got, expected );
 
+  test.description = 'case7: input from console';
+  var loggerToJstructure = new wLoggerToJstructure();
+  loggerToJstructure.inputFrom( console );
+  console.log( 'abc' );
+  loggerToJstructure.inputFromUnchain( console )
+  var got = loggerToJstructure.outputData;
+  var expected =
+  [
+    'abc'
+  ];
+  test.identical( got, expected );
+
+  test.description = 'case8: input from console twice';
+  var loggerToJstructure1 = new wLoggerToJstructure();
+  var loggerToJstructure2 = new wLoggerToJstructure();
+  loggerToJstructure1.inputFrom( console );
+  loggerToJstructure2.inputFrom( console );
+  console.log( 'abc' );
+  loggerToJstructure1.inputFromUnchain( console )
+  loggerToJstructure2.inputFromUnchain( console )
+
+  var got =
+  [
+    loggerToJstructure1.outputData,
+    loggerToJstructure2.outputData
+  ];
+
+  var expected =
+  [
+    [ 'abc' ],
+    [ 'abc' ]
+  ];
+  test.identical( got, expected );
+
 }
 
 //
