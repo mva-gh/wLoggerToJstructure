@@ -26,13 +26,7 @@ if( typeof module !== 'undefined' )
     require ( 'wTesting' );
   }
 
-  require( './PrinterBase.test.s' );
-  require( './Backend.test.s' );
-  require( './Chaining.test.s' );
-  require( './Logger.test.s' );
-  require( './LoggerToFile.test.s' );
   require( './LoggerToJstructure.test.s' );
-  require( './Other.test.s' );
 
 }
 
