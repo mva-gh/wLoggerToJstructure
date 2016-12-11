@@ -33,6 +33,8 @@ Chaining:
 *  Remove current logger from target's output list - [inputFromUnchain](https://rawgit.com/Wandalen/wLogger/master/doc/reference/wPrinterBase.html#.inputFromUnchain)
 
 Other:
+* Check if object exists in logger's inputs list - [hasInput](https://rawgit.com/Wandalen/wLogger/master/doc/reference/wPrinterBase.html#.hasInput)
+* Check if object exists in logger's outputs list - [hasOutput](https://rawgit.com/Wandalen/wLogger/master/doc/reference/wPrinterBase.html#.hasOutput)
 * Convert data structure to json string - [toJson](https://rawgit.com/Wandalen/wLoggerToJstructure/master/doc/reference/wLoggerToJstructure.html#.toJson)
 
 ##### Example #1
