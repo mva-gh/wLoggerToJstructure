@@ -15,16 +15,21 @@ node ./staging/abase/z.test/LoggerToJstructure.test.s
 if( typeof module !== 'undefined' )
 {
 
-  require( '../object/printer/LoggerToJstructure.s' );
-
+  if( typeof wBase === 'undefined' )
   try
   {
-    require( '../../../../wTesting/staging/abase/object/Testing.debug.s' );
+    require( '../include/wTools.s' );
   }
-  catch ( err )
+  catch( err )
   {
-    require ( 'wTesting' );
+    require( 'wTools' );
   }
+
+  var _ = wTools;
+
+  _.include( 'wTesting' );
+
+  require( '../printer/LoggerToJstructure.s' );
 
 }
 

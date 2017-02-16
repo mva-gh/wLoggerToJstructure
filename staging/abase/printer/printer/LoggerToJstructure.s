@@ -7,8 +7,19 @@
 if( typeof module !== 'undefined' )
 {
 
-  if( typeof wLogger === 'undefined' )
-  require( 'wLogger' )
+  if( typeof wBase === 'undefined' )
+  try
+  {
+    require( '../wTools.s' );
+  }
+  catch( err )
+  {
+    require( 'wTools' );
+  }
+
+  var _ = wTools;
+
+  _.include( 'wLogger' );
 
 }
 
@@ -33,15 +44,15 @@ var symbolForLevel = Symbol.for( 'level' );
  * </ul>
  * Leveling:
  * <ul>
- *  <li>Increase current level [up]{@link wPrinterBase.up}
- *  <li>Decrease current level [down]{@link wPrinterBase.down}
+ *  <li>Increase current level [up]{@link wPrinterMid.up}
+ *  <li>Decrease current level [down]{@link wPrinterMid.down}
  * </ul>
  * Chaining:
  * <ul>
- *  <li>Add object to output list [outputTo]{@link wPrinterBase.outputTo}
- *  <li>Remove object from output list [outputToUnchain]{@link wPrinterBase.outputToUnchain}
- *  <li>Add current logger to target's output list [inputFrom]{@link wPrinterBase.inputFrom}
- *  <li>Remove current logger from target's output list [inputFromUnchain]{@link wPrinterBase.inputFromUnchain}
+ *  <li>Add object to output list [outputTo]{@link wPrinterMid.outputTo}
+ *  <li>Remove object from output list [outputToUnchain]{@link wPrinterMid.outputToUnchain}
+ *  <li>Add current logger to target's output list [inputFrom]{@link wPrinterMid.inputFrom}
+ *  <li>Remove current logger from target's output list [inputFromUnchain]{@link wPrinterMid.inputFromUnchain}
  * </ul>
  * Other:
  * <ul>
@@ -72,8 +83,8 @@ var symbolForLevel = Symbol.for( 'level' );
  */
 
 var _ = wTools;
-var Parent = wPrinterBase;
-var Self = function wLoggerToJstructure()
+var Parent = wPrinterTop;
+var Self = function wLoggerToJstructure( o )
 {
   if( !( this instanceof Self ) )
   if( o instanceof Self )
@@ -85,7 +96,7 @@ var Self = function wLoggerToJstructure()
 
 //
 
-var init = function( o )
+function init( o )
 {
   var self = this;
 
@@ -97,7 +108,7 @@ var init = function( o )
 
 //
 
-var _init_static = function( name )
+function __initChainingMixinWrite( name )
 {
   var proto = this;
 
@@ -109,9 +120,9 @@ var _init_static = function( name )
 
   /* */
 
-  var write = function()
+  function write()
   {
-    this._writeToStruct.apply(this, arguments );
+    this._writeToStruct.apply( this, arguments );
     if( this.output )
     return this[ nameAct ].apply( this,arguments );
   }
@@ -121,7 +132,7 @@ var _init_static = function( name )
 
 //
 
-var _writeToStruct = function()
+function _writeToStruct()
 {
   if( !arguments.length )
   return;
@@ -133,14 +144,14 @@ var _writeToStruct = function()
 
 //
 
-var _levelSet = function( level )
+function levelSet( level )
 {
   var self = this;
 
-  _.assert( level >= 0, '_levelSet : cant go below zero level to',level );
+  _.assert( level >= 0, 'levelSet : cant go below zero level to',level );
   _.assert( isFinite( level ) );
 
-  var _changeLevel = function( arr, level )
+  function _changeLevel( arr, level )
   {
     if( !level )
     return arr;
@@ -153,7 +164,7 @@ var _levelSet = function( level )
 
   var dLevel = level - self[ symbolForLevel ];
 
-  Parent.prototype._levelSet.call( self,level );
+  Parent.prototype.levelSet.call( self,level );
 
   if( dLevel > 0 )
   {
@@ -187,7 +198,7 @@ var _levelSet = function( level )
  * @memberof wLoggerToJstructure
  */
 
-var toJson = function()
+function toJson()
 {
   var self = this;
   return _.toStr( self.outputData, { json : 1 } );
@@ -223,10 +234,10 @@ var Proto =
 {
 
   init : init,
-  _init_static : _init_static,
+  __initChainingMixinWrite : __initChainingMixinWrite,
 
   _writeToStruct : _writeToStruct,
-  _levelSet : _levelSet,
+  levelSet : levelSet,
 
   toJson : toJson,
 
@@ -249,7 +260,7 @@ _.protoMake
   extend : Proto,
 });
 
-Self.prototype.init_static();
+Self.prototype._initChainingMixin();
 
 //
 

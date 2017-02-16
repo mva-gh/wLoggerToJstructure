@@ -1,5 +1,12 @@
 if( typeof module !== 'undefined' )
-require( '../staging/abase/object/printer/LoggerToJstructure.s' );
+try
+{
+  require( 'wloggertojstructure' );
+}
+catch( err )
+{
+  require( '../staging/abase/printer/printer/LoggerToJstructure.s' );
+}
 
 var _ = wTools;
 
