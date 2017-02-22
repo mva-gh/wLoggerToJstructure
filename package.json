@@ -35,9 +35,8 @@
     "url": "https://github.com/Wandalen/wLoggerToJstructure/issues"
   },
   "dependencies": {
-    "wTools": "",
-    "wCopyable": "",
-    "wLogger": ""
+    "wLogger": "",
+    "wloggertojstructure": ""
   },
   "devDependencies": {
     "wTesting": ""

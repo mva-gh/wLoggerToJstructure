@@ -102,44 +102,81 @@ function init( o )
 
   Parent.prototype.init.call( self,o );
 
-  self.currentContainer = self.outputData;
+  self._currentContainer = self.outputData;
 
 }
 
 //
 
-function __initChainingMixinWrite( name )
+// function __initChainingMixinWrite( name )
+// {
+//   var proto = this;
+//
+//   _.assert( Object.hasOwnProperty.call( proto,'constructor' ) )
+//   _.assert( arguments.length === 1 );
+//   _.assert( _.strIs( name ) );
+//
+//   var nameAct = name + 'Act';
+//
+//   /* */
+//
+//   function write()
+//   {
+//     this._writeToStruct.apply( this, arguments );
+//     if( this.output )
+//     return this[ nameAct ].apply( this,arguments );
+//   }
+//
+//   proto[ name ] = write;
+// }
+
+//
+
+// function _writeToStruct()
+// {
+//   if( !arguments.length )
+//   return;
+//
+//   var data = _.strConcat.apply( {}, arguments );
+//
+//   this._currentContainer.push( data );
+// }
+
+//
+
+function write()
 {
-  var proto = this;
+  var self = this;
 
-  _.assert( Object.hasOwnProperty.call( proto,'constructor' ) )
-  _.assert( arguments.length === 1 );
-  _.assert( _.strIs( name ) );
+  // if( !arguments.length )
+  // return;
 
-  var nameAct = name + 'Act';
+  var args = self._writeBegin( arguments );
 
-  /* */
+  _.assert( _.arrayIs( args ) );
+  _.assert( args.length === 1 );
 
-  function write()
+  if( self.onWrite )
+  self.onWrite( args[ 0 ] );
+
+  // var data = _.strConcat.apply( {}, arguments );
+
+  var terminal = args[ 0 ];
+  if( self.usingTags && _.mapKeys( self.tags ).length )
   {
-    this._writeToStruct.apply( this, arguments );
-    if( this.output )
-    return this[ nameAct ].apply( this,arguments );
+
+    var text = terminal;
+    terminal = Object.create( null );
+    terminal.text = text;
+
+    for( var t in self.tags )
+    {
+      terminal[ t ] = self.tags[ t ];
+    }
+
   }
 
-  proto[ name ] = write;
-}
-
-//
-
-function _writeToStruct()
-{
-  if( !arguments.length )
-  return;
-
-  var data = _.strConcat.apply( {}, arguments );
-
-  this.currentContainer.push( data );
+  this._currentContainer.push( terminal );
 }
 
 //
@@ -151,16 +188,18 @@ function levelSet( level )
   _.assert( level >= 0, 'levelSet : cant go below zero level to',level );
   _.assert( isFinite( level ) );
 
-  function _changeLevel( arr, level )
-  {
-    if( !level )
-    return arr;
-    if( !arr[ 0 ] )
-    arr[ 0 ] = [ ];
-    else if( !_.arrayIs( arr[ 0 ] ) )
-    arr.unshift( [] );
-    return _changeLevel( arr[ 0 ], --level );
-  }
+  // function _changeLevel( arr, level )
+  // {
+  //   if( !level )
+  //   return arr;
+  //
+  //   if( !arr[ 0 ] )
+  //   arr[ 0 ] = [ ];
+  //   else if( !_.arrayIs( arr[ 0 ] ) )
+  //   arr.unshift( [] );
+  //
+  //   return _changeLevel( arr[ 0 ], --level );
+  // }
 
   var dLevel = level - self[ symbolForLevel ];
 
@@ -168,11 +207,21 @@ function levelSet( level )
 
   if( dLevel > 0 )
   {
-    self.currentContainer = _changeLevel( self.currentContainer, +dLevel );
+    for( var l = 0 ; l < dLevel ; l++ )
+    {
+      var newContainer = [];
+      self._currentContainers.push( self._currentContainer );
+      self._currentContainer.push( newContainer );
+      self._currentContainer = newContainer;
+    }
   }
   else if( dLevel < 0 )
   {
-    self.currentContainer = _changeLevel( self.outputData, level );
+    _.assert( _.arrayLike( self._currentContainers[ -dLevel-1 ] ) || _.objectLike( self._currentContainers[ -dLevel-1 ] ) );
+    self._currentContainer = self._currentContainers[ -dLevel-1 ];
+    self._currentContainers.splice( 0,-dLevel );
+    if( level === 0 )
+    _.assert( self._currentContainers.length === 0 );
   }
 
 }
@@ -210,6 +259,7 @@ function toJson()
 
 var Composes =
 {
+  usingTags : 1,
 }
 
 var Aggregates =
@@ -223,7 +273,8 @@ var Associates =
 
 var Restricts =
 {
-  currentContainer : null
+  _currentContainer : null,
+  _currentContainers : [],
 }
 
 // --
@@ -234,9 +285,12 @@ var Proto =
 {
 
   init : init,
-  __initChainingMixinWrite : __initChainingMixinWrite,
 
-  _writeToStruct : _writeToStruct,
+  // __initChainingMixinWrite : __initChainingMixinWrite,
+  // _writeToStruct : _writeToStruct,
+
+  write : write,
+
   levelSet : levelSet,
 
   toJson : toJson,
@@ -260,7 +314,7 @@ _.protoMake
   extend : Proto,
 });
 
-Self.prototype._initChainingMixin();
+// Self.prototype._initChainingMixin();
 
 //
 
