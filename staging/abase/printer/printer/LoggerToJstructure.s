@@ -50,9 +50,9 @@ var symbolForLevel = Symbol.for( 'level' );
  * Chaining:
  * <ul>
  *  <li>Add object to output list [outputTo]{@link wPrinterMid.outputTo}
- *  <li>Remove object from output list [outputToUnchain]{@link wPrinterMid.outputToUnchain}
+ *  <li>Remove object from output list [outputUnchain]{@link wPrinterMid.outputUnchain}
  *  <li>Add current logger to target's output list [inputFrom]{@link wPrinterMid.inputFrom}
- *  <li>Remove current logger from target's output list [inputFromUnchain]{@link wPrinterMid.inputFromUnchain}
+ *  <li>Remove current logger from target's output list [inputUnchain]{@link wPrinterMid.inputUnchain}
  * </ul>
  * Other:
  * <ul>
@@ -108,75 +108,38 @@ function init( o )
 
 //
 
-// function __initChainingMixinWrite( name )
-// {
-//   var proto = this;
-//
-//   _.assert( Object.hasOwnProperty.call( proto,'constructor' ) )
-//   _.assert( arguments.length === 1 );
-//   _.assert( _.strIs( name ) );
-//
-//   var nameAct = name + 'Act';
-//
-//   /* */
-//
-//   function write()
-//   {
-//     this._writeToStruct.apply( this, arguments );
-//     if( this.output )
-//     return this[ nameAct ].apply( this,arguments );
-//   }
-//
-//   proto[ name ] = write;
-// }
-
-//
-
-// function _writeToStruct()
-// {
-//   if( !arguments.length )
-//   return;
-//
-//   var data = _.strConcat.apply( {}, arguments );
-//
-//   this._currentContainer.push( data );
-// }
-
-//
-
 function write()
 {
   var self = this;
 
-  // if( !arguments.length )
-  // return;
+  debugger;
+  var o = wPrinterBase.prototype.write( arguments );
+  // var args = self._writePrepare( arguments );
 
-  var args = self._writeBegin( arguments );
+  _.assert( _.arrayIs( o.output ) );
+  _.assert( o.output.length === 1 );
 
-  _.assert( _.arrayIs( args ) );
-  _.assert( args.length === 1 );
+  // if( self.onWrite )
+  // self.onWrite( o );
 
-  if( self.onWrite )
-  self.onWrite( args[ 0 ] );
-
-  // var data = _.strConcat.apply( {}, arguments );
-
-  var terminal = args[ 0 ];
-  if( self.usingTags && _.mapKeys( self.tags ).length )
+  var terminal = o.output[ 0 ];
+  if( self.usingTags && _.mapKeys( self.attributes ).length )
   {
 
     var text = terminal;
     terminal = Object.create( null );
     terminal.text = text;
 
-    for( var t in self.tags )
+    for( var t in self.attributes )
     {
-      terminal[ t ] = self.tags[ t ];
+      terminal[ t ] = self.attributes[ t ];
     }
 
   }
 
   this._currentContainer.push( terminal );
+
+  return o;
 }
 
 //
@@ -217,9 +180,10 @@ function levelSet( level )
   }
   else if( dLevel < 0 )
   {
-    _.assert( _.arrayLike( self._currentContainers[ -dLevel-1 ] ) || _.objectLike( self._currentContainers[ -dLevel-1 ] ) );
-    self._currentContainer = self._currentContainers[ -dLevel-1 ];
-    self._currentContainers.splice( 0,-dLevel );
+    self._currentContainer = self._currentContainers[ self._currentContainers.length+dLevel ];
+    _.assert( _.arrayLike( self._currentContainer ) || _.objectLike( self._currentContainer ) );
+    _.assert( self._currentContainers.length >= -dLevel );
+    self._currentContainers.splice( self._currentContainers.length+dLevel,self._currentContainers.length );
     if( level === 0 )
     _.assert( self._currentContainers.length === 0 );
   }
@@ -260,6 +224,8 @@ function toJson()
 var Composes =
 {
   usingTags : 1,
+  // writingAttributesIntoTerminals : 1,
+  // writingAttributesIntoBranches : 1,
 }
 
 var Aggregates =

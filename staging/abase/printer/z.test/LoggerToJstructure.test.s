@@ -176,7 +176,7 @@ var chaining = function( test )
   var loggerToJstructure = new wLoggerToJstructure();
   loggerToJstructure.inputFrom( console );
   console.log( 'abc' );
-  loggerToJstructure.inputFromUnchain( console )
+  loggerToJstructure.inputUnchain( console )
   var got = loggerToJstructure.outputData;
   var expected =
   [
@@ -190,8 +190,8 @@ var chaining = function( test )
   loggerToJstructure1.inputFrom( console );
   loggerToJstructure2.inputFrom( console );
   console.log( 'abc' );
-  loggerToJstructure1.inputFromUnchain( console )
-  loggerToJstructure2.inputFromUnchain( console )
+  loggerToJstructure1.inputUnchain( console )
+  loggerToJstructure2.inputUnchain( console )
 
   var got =
   [

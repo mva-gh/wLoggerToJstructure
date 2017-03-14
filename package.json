@@ -3,7 +3,8 @@
   "version": "0.3.6",
   "description": "Module in JavaScript providing convenient, layered, cross-platform means for multilevel, colorful logging",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
-  "contributors": [
+  "contributors":
+  [
     {
       "name": "Kostiantyn Wandalen",
       "email": "wtory.net@domainsbyproxy.com>"
