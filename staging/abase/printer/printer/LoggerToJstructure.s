@@ -1,4 +1,4 @@
-(function _LoggerToJstructure_s_() {
+(function _PrinterToJstructure_s_() {
 
 'use strict';
 
@@ -7,10 +7,10 @@
 if( typeof module !== 'undefined' )
 {
 
-  if( typeof wBase === 'undefined' )
+  // if( typeof wBase === 'undefined' )
   try
   {
-    require( '../wTools.s' );
+    require( '../../wTools.s' );
   }
   catch( err )
   {
@@ -56,26 +56,26 @@ var symbolForLevel = Symbol.for( 'level' );
  * </ul>
  * Other:
  * <ul>
- * <li>Convert data structure to json string [toJson]{@link wLoggerToJstructure.toJson}
+ * <li>Convert data structure to json string [toJson]{@link wPrinterToJstructure.toJson}
  * </ul>
- * @class wLoggerToJstructure
+ * @class wPrinterToJstructure
  * @param { Object } o - Options.
  * @param { Object } [ o.output=null ] - Specifies single output object for current logger.
  * @param { Object } [ o.outputData=[ ] ] - Specifies where to write messages.
  *
  * @example
- * var l = new wLoggerToJstructure();
+ * var l = new wPrinterToJstructure();
  * l.log( '1' );
  * l.outputData; //returns [ '1' ]
  *
  * @example
  * var data = [];
- * var l = new wLoggerToJstructure({ outputData : data });
+ * var l = new wPrinterToJstructure({ outputData : data });
  * l.log( '1' );
  * console.log( data ); //returns [ '1' ]
  *
  * @example
- * var l = new wLoggerToJstructure({ output : console });
+ * var l = new wPrinterToJstructure({ output : console });
  * l.log( '1' ); // console prints '1'
  * l.outputData; //returns [ '1' ]
  *
@@ -84,7 +84,7 @@ var symbolForLevel = Symbol.for( 'level' );
 
 var _ = wTools;
 var Parent = wPrinterTop;
-var Self = function wLoggerToJstructure( o )
+var Self = function wPrinterToJstructure( o )
 {
   if( !( this instanceof Self ) )
   if( o instanceof Self )
@@ -93,6 +93,8 @@ var Self = function wLoggerToJstructure( o )
   return new( _.routineJoin( Self, Self, arguments ) );
   return Self.prototype.init.apply( this,arguments );
 }
+
+Self.nameShort = 'PrinterToJstructure';
 
 //
 
@@ -113,14 +115,14 @@ function write()
   var self = this;
 
   debugger;
-  var o = wPrinterBase.prototype.write( arguments );
-  // var args = self._writePrepare( arguments );
+  var o = wPrinterBase.prototype.write.apply( self,arguments );
 
+  if( !o )
+  return;
+
+  _.assert( o );
   _.assert( _.arrayIs( o.output ) );
   _.assert( o.output.length === 1 );
-
-  // if( self.onWrite )
-  // self.onWrite( o );
 
   var terminal = o.output[ 0 ];
   if( self.usingTags && _.mapKeys( self.attributes ).length )
@@ -197,7 +199,7 @@ function levelSet( level )
  * @returns Data structure as JSON string.
  *
  * @example
- * var l = new wLoggerToJstructure();
+ * var l = new wPrinterToJstructure();
  * l.up( 2 );
  * l.log( '1' );
  * l.toJson();
@@ -208,7 +210,7 @@ function levelSet( level )
  * // ]
  * //]
  * @method toJson
- * @memberof wLoggerToJstructure
+ * @memberof wPrinterToJstructure
  */
 
 function toJson()
@@ -275,7 +277,7 @@ var Proto =
 
 _.protoMake
 ({
-  constructor : Self,
+  cls : Self,
   parent : Parent,
   extend : Proto,
 });
@@ -303,8 +305,6 @@ if( typeof module !== 'undefined' && module !== null )
   module[ 'exports' ] = Self;
 }
 
-_global_[ Self.name ] = wTools.LoggerToJstructure = Self;
-
-return Self;
+_global_[ Self.name ] = wTools[ Self.nameShort ] = Self;
 
 })();

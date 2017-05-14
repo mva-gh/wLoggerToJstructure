@@ -1,6 +1,7 @@
 {
   "name": "wloggertojstructure",
   "version": "0.3.7",
+  "engine" : "node >= 5.0.0",
   "description": "Module in JavaScript providing convenient, layered, cross-platform means for multilevel, colorful logging",
   "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
   "contributors": [
@@ -24,7 +25,7 @@
     "main": "staging/abase/printer/printer/LoggerToJstructure.s"
   },
   "scripts": {
-    "test": "node ./staging/abase/printer/z.test/Backend.all.test.s",
+    "test": "wtest staging",
     "make_doc": "./doc.sh"
   },
   "repository": {
