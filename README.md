@@ -1,9 +1,10 @@
 
-## wLoggerToJstructure
-Module in JavaScript providing convenient, layered, logging into data structure.
+# wLoggerToJstructure [![Build Status](https://travis-ci.org/Wandalen/wLoggerToJstructure.svg?branch=master)](https://travis-ci.org/Wandalen/wLoggerToJstructure)
+
+The module in JavaScript provides convenient, layered, logging into data structure.
 Logger writes messages( incoming & outgoing ) to data structure( array of arrays ) specified by( outputData ).
 Each inner array represent new level of the structure. On write logger puts messages into structure level which is equal to logger level property value.
-If needed level not exists logger creates it. Next level is always placed at zero index of previous.Then transfers message to the next output(s) object in the chain if it exists.
+Creates folders if needed level does not exist logger  it. Next level is always placed at zero index of previous.Then transfers message to the next output(s) object in the chain if it exists.
 
 
 ## Installation
@@ -85,8 +86,4 @@ l.log( 'abc' );
 abc
 */
 ```
-
-
-
-
 
