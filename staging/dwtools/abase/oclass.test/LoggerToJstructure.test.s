@@ -29,7 +29,7 @@ if( typeof module !== 'undefined' )
 
   _.include( 'wTesting' );
 
-  require( '../printer/LoggerToJstructure.s' );
+  require( '../oclass/printer/top/LoggerToJstructure.s' );
 
 }
 
@@ -214,6 +214,7 @@ var Proto =
 {
 
   name : 'LoggerToJstructure test',
+  silencing : 1,
 
   tests :
   {
@@ -223,15 +224,13 @@ var Proto =
 
   },
 
-  verbose : 1,
-
 }
 
 //
 
 _.mapExtend( Self,Proto );
-_.Testing.register( Self );
+Self = wTestSuite( Self )
 if( typeof module !== 'undefined' && !module.parent )
-_.Testing.test( Self );
+_.Tester.test( Self.name );
 
 } )( );
