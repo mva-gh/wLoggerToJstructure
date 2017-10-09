@@ -15,7 +15,7 @@
     }
   ],
   "license": "MIT",
-  "main": "staging/dwtools/abase/oclass/printer/top/LoggerToJstructure.s",
+  "main": "staging/dwtools/abase/oclass/printer/top/ToJstructure.s",
   "files": [
     "staging/dwtools/abase/oclass/printer",
     "production"

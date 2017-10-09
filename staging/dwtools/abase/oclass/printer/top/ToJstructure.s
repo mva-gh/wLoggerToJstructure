@@ -1,4 +1,4 @@
-(function _PrinterToJstructure_s_() {
+(function _ToJstructure_s_() {
 
 'use strict';
 
