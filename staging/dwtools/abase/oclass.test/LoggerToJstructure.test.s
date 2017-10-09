@@ -1,4 +1,4 @@
-( function _LoggerToJstructure_test_s_( ) {
+( function _ToJstructure_test_s_( ) {
 
 'use strict';
 
