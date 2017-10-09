@@ -168,7 +168,7 @@ function levelSet( level )
 
   var dLevel = level - self[ symbolForLevel ];
 
-  Parent.prototype.levelSet.call( self,level );
+  // Parent.prototype.levelSet.call( self,level );
 
   if( dLevel > 0 )
   {
@@ -190,6 +190,7 @@ function levelSet( level )
     _.assert( self._currentContainers.length === 0 );
   }
 
+  self[ symbolForLevel ] = level;
 }
 
 //
