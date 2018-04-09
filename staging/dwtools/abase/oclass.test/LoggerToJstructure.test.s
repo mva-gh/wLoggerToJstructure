@@ -1,35 +1,17 @@
-( function _ToJstructure_test_s_( ) {
+( function _ToJs_test_s_( ) {
 
 'use strict';
-
-/*
-
-to run this test
-from the project directory run
-
-npm install
-node ./staging/dwtools/abase/z.test/LoggerToJstructure.test.s
-
-*/
 
 if( typeof module !== 'undefined' )
 {
 
-  if( typeof wBase === 'undefined' )
-  try
-  {
-    require( '../include/wTools.s' );
-  }
-  catch( err )
-  {
-    require( 'wTools' );
-  }
+  require( '../printer/top/ToJs.s' );
 
   var _ = wTools;
 
   _.include( 'wTesting' );
 
-  require( '../oclass/printer/top/LoggerToJstructure.s' );
+  require( '../printer/top/ToJs.s' );
 
 }
 
@@ -42,14 +24,14 @@ var Self = {};
 var toJsStructure = function( test )
 {
   test.description = 'case1';
-  var loggerToJstructure  = new wPrinterToJstructure();
+  var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.log( '123' );
   var got = loggerToJstructure.outputData;
   var expected = [ '123' ];
   test.identical( got, expected );
 
   test.description = 'case2';
-  var loggerToJstructure  = new wPrinterToJstructure();
+  var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.up( 2 );
   loggerToJstructure.log( '123' );
   var got = loggerToJstructure.outputData;
@@ -62,14 +44,14 @@ var toJsStructure = function( test )
   test.identical( got, expected );
 
   test.description = 'case3';
-  var loggerToJstructure  = new wPrinterToJstructure();
+  var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.log();
   var got = loggerToJstructure.outputData;
   var expected = [ '' ];
   test.identical( got, expected );
 
   test.description = 'case4';
-  var loggerToJstructure  = new wPrinterToJstructure();
+  var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.log( '321');
   var got = loggerToJstructure.toJson();
   var expected = '[ "321" ]';
@@ -83,7 +65,7 @@ var chaining = function( test )
 {
   var removeBar = () =>
   {
-    if( !test.suite.silencing )
+    if( !test.suit.silencing )
     return;
 
     _.Tester.logger.consoleBar({ outputLogger : _.Tester.logger, bar : 0 })
@@ -91,7 +73,7 @@ var chaining = function( test )
 
   var restoreBar = () =>
   {
-    if( !test.suite.silencing )
+    if( !test.suit.silencing )
     return;
 
     var o = { outputLogger : _.Tester.logger, bar : 1 }
@@ -100,8 +82,8 @@ var chaining = function( test )
   };
 
   test.description = 'case1';
-  var loggerToJstructure = new wPrinterToJstructure();
-  var l = new wLogger();
+  var loggerToJstructure = new wPrinterToJs();
+  var l = new _.Logger();
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
   l.log( 'msg' );
   var got = loggerToJstructure.outputData;
@@ -109,8 +91,8 @@ var chaining = function( test )
   test.identical( got, expected );
 
   test.description = 'case2';
-  var loggerToJstructure = new wPrinterToJstructure();
-  var l = new wLogger();
+  var loggerToJstructure = new wPrinterToJs();
+  var l = new _.Logger();
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
   l.up( 2 );
   l.log( 'msg' );
@@ -119,8 +101,8 @@ var chaining = function( test )
   test.identical( got, expected );
 
   test.description = 'case3';
-  var loggerToJstructure = new wPrinterToJstructure();
-  var l = new wLogger();
+  var loggerToJstructure = new wPrinterToJs();
+  var l = new _.Logger();
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
   loggerToJstructure.up( 2 );
   l.log( 'msg' );
@@ -133,9 +115,9 @@ var chaining = function( test )
   ];
   test.identical( got, expected );
 
-  // test.description = 'case4: Logger->LoggerToJstructure, leveling on';
-  // var loggerToJstructure = new wPrinterToJstructure();
-  // var l = new wLogger();
+  // test.description = 'case4: Logger->LoggerToJs, leveling on';
+  // var loggerToJstructure = new wPrinterToJs();
+  // var l = new _.Logger();
   // l.outputTo( loggerToJstructure, { combining : 'rewrite', leveling : 'delta' } );
   // l.log( 'msg' );
   // l.up( 2 );
@@ -150,9 +132,9 @@ var chaining = function( test )
   // ];
   // test.identical( got, expected );
 
-  test.description = 'case5 LoggerToJstructure->LoggerToJstructure';
-  var loggerToJstructure = new wPrinterToJstructure();
-  var loggerToJstructure2 = new wPrinterToJstructure();
+  test.description = 'case5 LoggerToJs->LoggerToJs';
+  var loggerToJstructure = new wPrinterToJs();
+  var loggerToJstructure2 = new wPrinterToJs();
   loggerToJstructure.outputTo( loggerToJstructure2, { combining : 'rewrite' } );
   loggerToJstructure.log( '1' );
   loggerToJstructure2.log( '2' );
@@ -169,10 +151,10 @@ var chaining = function( test )
   ];
   test.identical( got, expected );
 
-  test.description = 'case6: LoggerToJstructure->Logger->LoggerToJstructure';
-  var loggerToJstructure = new wPrinterToJstructure();
-  var loggerToJstructure2 = new wPrinterToJstructure();
-  var l = new wLogger();
+  test.description = 'case6: LoggerToJs->Logger->LoggerToJs';
+  var loggerToJstructure = new wPrinterToJs();
+  var loggerToJstructure2 = new wPrinterToJs();
+  var l = new _.Logger();
   loggerToJstructure.outputTo( l, { combining : 'rewrite' } );
   l.outputTo( loggerToJstructure2, { combining : 'rewrite' } );
   l._prefix = '*';
@@ -192,7 +174,7 @@ var chaining = function( test )
   test.identical( got, expected );
 
   test.description = 'case7: input from console';
-  var loggerToJstructure = new wPrinterToJstructure();
+  var loggerToJstructure = new wPrinterToJs();
   removeBar();
   loggerToJstructure.inputFrom( console );
   console.log( 'abc' );
@@ -206,8 +188,8 @@ var chaining = function( test )
   test.identical( got, expected );
 
   test.description = 'case8: input from console twice';
-  var loggerToJstructure1 = new wPrinterToJstructure();
-  var loggerToJstructure2 = new wPrinterToJstructure();
+  var loggerToJstructure1 = new wPrinterToJs();
+  var loggerToJstructure2 = new wPrinterToJs();
   removeBar();
   loggerToJstructure1.inputFrom( console );
   loggerToJstructure2.inputFrom( console );
@@ -236,7 +218,7 @@ var chaining = function( test )
 
 function leveling( test )
 {
-  var loggerToJstructure = new wPrinterToJstructure();
+  var loggerToJstructure = new wPrinterToJs();
   loggerToJstructure.level = 5;
   test.identical( loggerToJstructure.level, 5 );
   loggerToJstructure.log( 1 );
@@ -262,7 +244,7 @@ function leveling( test )
 
   /**/
 
-  var loggerToJstructure = new wPrinterToJstructure();
+  var loggerToJstructure = new wPrinterToJs();
   loggerToJstructure.up( 5 );
   test.identical( loggerToJstructure.level, 5 );
   loggerToJstructure.log( 1 );
@@ -288,7 +270,7 @@ function leveling( test )
 
   /**/
 
-  var loggerToJstructure = new wPrinterToJstructure();
+  var loggerToJstructure = new wPrinterToJs();
   loggerToJstructure._prefix = '*';
   loggerToJstructure.level = 2;
   loggerToJstructure.log( 1 );
@@ -302,7 +284,7 @@ function leveling( test )
 var Proto =
 {
 
-  name : 'LoggerToJstructure test',
+  name : 'LoggerToJs test',
   silencing : 1,
 
   tests :
@@ -319,7 +301,7 @@ var Proto =
 //
 
 _.mapExtend( Self,Proto );
-Self = wTestSuite( Self )
+Self = wTestSuit( Self )
 if( typeof module !== 'undefined' && !module.parent )
 _.Tester.test( Self.name );
 
