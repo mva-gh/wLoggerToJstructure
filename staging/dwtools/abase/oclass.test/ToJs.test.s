@@ -5,13 +5,19 @@
 if( typeof module !== 'undefined' )
 {
 
-  require( '../printer/top/ToJs.s' );
+  try
+  {
+    require( '../printer/top/ToJs.s' );
+  }
+  catch( err )
+  {
+    require( '../oclass/printer/top/ToJs.s' );
+  }
 
   var _ = wTools;
 
   _.include( 'wTesting' );
 
-  require( '../printer/top/ToJs.s' );
 
 }
 
@@ -68,7 +74,20 @@ var chaining = function( test )
     if( !test.suit.silencing )
     return;
 
-    _.Tester.logger.consoleBar({ outputLogger : _.Tester.logger, bar : 0 })
+    var logger = _global_.wTester.logger;
+    var barLogger;
+
+    for( var i = 0; i < console.outputs.length; i++ )
+    {
+      if( console.outputs[ i ].output.name === 'barLogger' )
+      {
+        _.assert( console.outputs[ i ].barring );
+        barLogger = console.outputs[ i ].output;
+        break;
+      }
+    }
+
+    logger.consoleBar({ barLogger : barLogger, bar : 0 })
   };
 
   var restoreBar = () =>
@@ -76,9 +95,11 @@ var chaining = function( test )
     if( !test.suit.silencing )
     return;
 
-    var o = { outputLogger : _.Tester.logger, bar : 1 }
-    _.Tester.logger.consoleBar( o );
-    _.Tester._bar  = o;
+    var logger = _global_.wTester.logger;
+
+    var o = { outputLogger : logger, bar : 1 }
+    logger.consoleBar( o );
+    _global_.wTester._bar = o;
   };
 
   test.description = 'case1';
