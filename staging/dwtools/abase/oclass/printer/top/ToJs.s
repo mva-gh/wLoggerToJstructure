@@ -1,6 +1,6 @@
 (function _ToJs_s_() {
 
-'use strict';
+'use strict'; /*aaa*/
 
 // require
 
@@ -262,9 +262,6 @@ var Proto =
 
   init : init,
 
-  // __initChainingMixinWrite : __initChainingMixinWrite,
-  // _writeToStruct : _writeToStruct,
-
   write : write,
 
   levelSet : levelSet,
@@ -289,8 +286,6 @@ _.classMake
   parent : Parent,
   extend : Proto,
 });
-
-// Self.prototype._initChainingMixin();
 
 //
 
