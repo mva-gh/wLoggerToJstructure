@@ -69,6 +69,40 @@ var toJsStructure = function( test )
 
 var chaining = function( test )
 {
+
+ /*  var removeBar = () =>
+  {
+    if( !test.suit.silencing )
+    return;
+
+    var logger = _global_.wTester.logger;
+    var barLogger;
+
+    for( var i = 0; i < console.outputs.length; i++ )
+    {
+      if( console.outputs[ i ].output.name === 'barLogger' )
+      {
+        _.assert( console.outputs[ i ].barring );
+        barLogger = console.outputs[ i ].output;
+        break;
+      }
+    }
+
+    logger.consoleBar({ barLogger : barLogger, bar : 0 })
+  };
+
+  var restoreBar = () =>
+  {
+    if( !test.suit.silencing )
+    return;
+
+    var logger = _global_.wTester.logger;
+
+    var o = { outputLogger : logger, bar : 1 }
+    logger.consoleBar( o );
+    _global_.wTester._bar = o;
+  }; */
+
   var consoleWasBarred = false;
 
   var removeBar = () =>
