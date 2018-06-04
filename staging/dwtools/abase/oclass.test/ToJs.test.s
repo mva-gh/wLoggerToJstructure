@@ -2,6 +2,8 @@
 
 'use strict'; /*aaa*/
 
+/* qqq : final report disappear after this test suit */
+
 if( typeof module !== 'undefined' )
 {
 
