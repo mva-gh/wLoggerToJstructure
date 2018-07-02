@@ -1,6 +1,6 @@
 ( function _ToJs_test_s_( ) {
 
-'use strict'; 
+'use strict';
 
 /* qqq : final report disappear after this test suit */
 
@@ -121,7 +121,7 @@ var chaining = function( test )
   var restoreBar = () =>
   {
     _global_.wTester._bar = _.Logger.consoleBar({ outputLogger : _global_.wTester.logger, bar : 1 });
-    test.shouldBe( _.Logger.consoleIsBarred( console ) );
+    test.is( _.Logger.consoleIsBarred( console ) );
   };
 
   test.description = 'case1';
@@ -327,7 +327,7 @@ function leveling( test )
 var Proto =
 {
 
-  name : 'LoggerToJs test',
+  name : 'Tools/base/printer/ToJs',
   silencing : 1,
 
   tests :
