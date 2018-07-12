@@ -31,14 +31,14 @@ var Self = {};
 
 var toJsStructure = function( test )
 {
-  test.description = 'case1';
+  test.case = 'case1';
   var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.log( '123' );
   var got = loggerToJstructure.outputData;
   var expected = [ '123' ];
   test.identical( got, expected );
 
-  test.description = 'case2';
+  test.case = 'case2';
   var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.up( 2 );
   loggerToJstructure.log( '123' );
@@ -51,14 +51,14 @@ var toJsStructure = function( test )
   ];
   test.identical( got, expected );
 
-  test.description = 'case3';
+  test.case = 'case3';
   var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.log();
   var got = loggerToJstructure.outputData;
   var expected = [ '' ];
   test.identical( got, expected );
 
-  test.description = 'case4';
+  test.case = 'case4';
   var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.log( '321');
   var got = loggerToJstructure.toJson();
@@ -124,7 +124,7 @@ var chaining = function( test )
     test.is( _.Logger.consoleIsBarred( console ) );
   };
 
-  test.description = 'case1';
+  test.case = 'case1';
   var loggerToJstructure = new wPrinterToJs();
   var l = new _.Logger();
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
@@ -133,7 +133,7 @@ var chaining = function( test )
   var expected = [ 'msg' ];
   test.identical( got, expected );
 
-  test.description = 'case2';
+  test.case = 'case2';
   var loggerToJstructure = new wPrinterToJs();
   var l = new _.Logger();
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
@@ -143,7 +143,7 @@ var chaining = function( test )
   var expected = [ '    msg' ];
   test.identical( got, expected );
 
-  test.description = 'case3';
+  test.case = 'case3';
   var loggerToJstructure = new wPrinterToJs();
   var l = new _.Logger();
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
@@ -158,7 +158,7 @@ var chaining = function( test )
   ];
   test.identical( got, expected );
 
-  // test.description = 'case4: Logger->LoggerToJs, leveling on';
+  // test.case = 'case4: Logger->LoggerToJs, leveling on';
   // var loggerToJstructure = new wPrinterToJs();
   // var l = new _.Logger();
   // l.outputTo( loggerToJstructure, { combining : 'rewrite', leveling : 'delta' } );
@@ -175,7 +175,7 @@ var chaining = function( test )
   // ];
   // test.identical( got, expected );
 
-  test.description = 'case5 LoggerToJs->LoggerToJs';
+  test.case = 'case5 LoggerToJs->LoggerToJs';
   var loggerToJstructure = new wPrinterToJs();
   var loggerToJstructure2 = new wPrinterToJs();
   loggerToJstructure.outputTo( loggerToJstructure2, { combining : 'rewrite' } );
@@ -194,7 +194,7 @@ var chaining = function( test )
   ];
   test.identical( got, expected );
 
-  test.description = 'case6: LoggerToJs->Logger->LoggerToJs';
+  test.case = 'case6: LoggerToJs->Logger->LoggerToJs';
   var loggerToJstructure = new wPrinterToJs();
   var loggerToJstructure2 = new wPrinterToJs();
   var l = new _.Logger();
@@ -216,7 +216,7 @@ var chaining = function( test )
   ];
   test.identical( got, expected );
 
-  test.description = 'case7: input from console';
+  test.case = 'case7: input from console';
   var loggerToJstructure = new wPrinterToJs();
   removeBar();
   loggerToJstructure.inputFrom( console );
@@ -230,7 +230,7 @@ var chaining = function( test )
   ];
   test.identical( got, expected );
 
-  test.description = 'case8: input from console twice';
+  test.case = 'case8: input from console twice';
   var loggerToJstructure1 = new wPrinterToJs();
   var loggerToJstructure2 = new wPrinterToJs();
   removeBar();
