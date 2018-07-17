@@ -1,6 +1,6 @@
 ( function _ToJs_test_s_( ) {
 
-'use strict';
+'use strict'; /**/
 
 /* qqq : final report disappear after this test suit */
 
