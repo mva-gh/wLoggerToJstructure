@@ -1,6 +1,6 @@
 ( function _ToJs_test_s_( ) {
 
-'use strict'; /**/
+'use strict';
 
 /* qqq : final report disappear after this test suit */
 
@@ -126,7 +126,7 @@ var chaining = function( test )
 
   test.case = 'case1';
   var loggerToJstructure = new wPrinterToJs();
-  var l = new _.Logger();
+  var l = new _.Logger({ output : console });
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
   l.log( 'msg' );
   var got = loggerToJstructure.outputData;
@@ -135,7 +135,7 @@ var chaining = function( test )
 
   test.case = 'case2';
   var loggerToJstructure = new wPrinterToJs();
-  var l = new _.Logger();
+  var l = new _.Logger({ output : console });
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
   l.up( 2 );
   l.log( 'msg' );
@@ -145,7 +145,7 @@ var chaining = function( test )
 
   test.case = 'case3';
   var loggerToJstructure = new wPrinterToJs();
-  var l = new _.Logger();
+  var l = new _.Logger({ output : console });
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
   loggerToJstructure.up( 2 );
   l.log( 'msg' );
@@ -160,7 +160,7 @@ var chaining = function( test )
 
   // test.case = 'case4: Logger->LoggerToJs, leveling on';
   // var loggerToJstructure = new wPrinterToJs();
-  // var l = new _.Logger();
+  // var l = new _.Logger({ output : console });
   // l.outputTo( loggerToJstructure, { combining : 'rewrite', leveling : 'delta' } );
   // l.log( 'msg' );
   // l.up( 2 );
@@ -197,7 +197,7 @@ var chaining = function( test )
   test.case = 'case6: LoggerToJs->Logger->LoggerToJs';
   var loggerToJstructure = new wPrinterToJs();
   var loggerToJstructure2 = new wPrinterToJs();
-  var l = new _.Logger();
+  var l = new _.Logger({ output : console });
   loggerToJstructure.outputTo( l, { combining : 'rewrite' } );
   l.outputTo( loggerToJstructure2, { combining : 'rewrite' } );
   l._prefix = '*';
