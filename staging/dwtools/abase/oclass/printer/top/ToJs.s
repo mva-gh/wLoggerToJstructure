@@ -190,7 +190,7 @@ function levelSet( level )
   else if( dLevel < 0 )
   {
     self._currentContainer = self._currentContainers[ self._currentContainers.length+dLevel ];
-    _.assert( _.arrayLike( self._currentContainer ) || _.objectLike( self._currentContainer ) );
+    _.assert( _.longIs( self._currentContainer ) || _.objectLike( self._currentContainer ) );
     _.assert( self._currentContainers.length >= -dLevel );
     self._currentContainers.splice( self._currentContainers.length+dLevel,self._currentContainers.length );
     if( level === 0 )
