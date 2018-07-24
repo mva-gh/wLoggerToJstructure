@@ -100,7 +100,7 @@ var chaining = function( test )
 
     var logger = _global_.wTester.logger;
 
-    var o = { outputLogger : logger, exclusiveOutputPrinter : 1 }
+    var o = { outputPrinter : logger, exclusiveOutputPrinter : 1 }
     logger.consoleBar( o );
     _global_.wTester._barOptions = o;
   }; */
@@ -120,7 +120,7 @@ var chaining = function( test )
 
   var restoreBar = () =>
   {
-    _global_.wTester._barOptions = _.Logger.consoleBar({ outputLogger : _global_.wTester.logger, exclusiveOutputPrinter : 1 });
+    _global_.wTester._barOptions = _.Logger.consoleBar({ outputPrinter : _global_.wTester.logger, exclusiveOutputPrinter : 1 });
     test.is( _.Logger.consoleIsBarred( console ) );
   };
 
