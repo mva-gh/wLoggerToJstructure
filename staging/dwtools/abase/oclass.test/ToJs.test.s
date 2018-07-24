@@ -78,19 +78,19 @@ var chaining = function( test )
     return;
 
     var logger = _global_.wTester.logger;
-    var barLogger;
+    var barPrinter;
 
     for( var i = 0; i < console.outputs.length; i++ )
     {
-      if( console.outputs[ i ].output.name === 'barLogger' )
+      if( console.outputs[ i ].output.name === 'barPrinter' )
       {
-        _.assert( console.outputs[ i ].barring );
-        barLogger = console.outputs[ i ].output;
+        _.assert( console.outputs[ i ].exclusiveOutput );
+        barPrinter = console.outputs[ i ].output;
         break;
       }
     }
 
-    logger.consoleBar({ barLogger : barLogger, bar : 0 })
+    logger.consoleBar({ barPrinter : barPrinter, exclusiveOutputPrinter : 0 })
   };
 
   var restoreBar = () =>
@@ -100,7 +100,7 @@ var chaining = function( test )
 
     var logger = _global_.wTester.logger;
 
-    var o = { outputLogger : logger, bar : 1 }
+    var o = { outputLogger : logger, exclusiveOutputPrinter : 1 }
     logger.consoleBar( o );
     _global_.wTester._barOptions = o;
   }; */
@@ -113,14 +113,14 @@ var chaining = function( test )
     {
       consoleWasBarred = true;
       debugger
-      _global_.wTester._barOptions.bar = 0;
+      _global_.wTester._barOptions.exclusiveOutputPrinter = 0;
       _.Logger.consoleBar( _global_.wTester._barOptions );
     }
   };
 
   var restoreBar = () =>
   {
-    _global_.wTester._barOptions = _.Logger.consoleBar({ outputLogger : _global_.wTester.logger, bar : 1 });
+    _global_.wTester._barOptions = _.Logger.consoleBar({ outputLogger : _global_.wTester.logger, exclusiveOutputPrinter : 1 });
     test.is( _.Logger.consoleIsBarred( console ) );
   };
 
