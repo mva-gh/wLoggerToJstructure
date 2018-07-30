@@ -101,7 +101,7 @@ var Self = function wPrinterToJs( o )
   return Self.prototype.init.apply( this,arguments );
 }
 
-Self.nameShort = 'PrinterToJs';
+Self.shortName = 'PrinterToJs';
 
 //
 
@@ -228,7 +228,7 @@ function toJson()
 }
 
 // --
-// relationships
+// relations
 // --
 
 var Composes =
@@ -268,7 +268,7 @@ var Proto =
 
   toJson : toJson,
 
-  // relationships
+  // relations
 
   constructor : Self,
   Composes : Composes,
@@ -299,7 +299,7 @@ _.accessor
   combining : 'rewrite'
 });
 
-_global_[ Self.name ] = _[ Self.nameShort ] = Self;
+_global_[ Self.name ] = _[ Self.shortName ] = Self;
 
 // --
 // export
