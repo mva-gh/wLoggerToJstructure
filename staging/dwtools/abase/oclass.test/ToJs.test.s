@@ -71,36 +71,13 @@ var toJsStructure = function( test )
 
 function chaining( test )
 {
-  let consoleWasBarred = false;
-
-  var removeBar = () =>
-  {
-    if( _.Logger.consoleIsBarred( console ) )
-    {
-      consoleWasBarred = true;
-      debugger
-      _global_.wTester._barOptions.on = 0;
-      _.Logger.consoleBar( _global_.wTester._barOptions );
-    }
-  };
-
-  var restoreBar = () =>
-  {
-    _global_.wTester._barOptions = _.Logger.consoleBar({ outputPrinter : _global_.wTester.logger, on : 1 });
-    test.is( _.Logger.consoleIsBarred( console ) );
-  };
-
-  //
-
   try
   {
     _chaining();
   }
   catch( err )
   {
-    if( consoleWasBarred )
-    if( !_.Logger.consoleIsBarred( console ) )
-    restoreBar();
+    test.suite.consoleBar( 1 );
 
     throw _.errLogOnce( err );
   }
@@ -204,11 +181,11 @@ function chaining( test )
 
     test.case = 'case7: input from console';
     var loggerToJstructure = new wPrinterToJs();
-    removeBar();
+    test.suite.consoleBar( 0 );
     loggerToJstructure.inputFrom( console );
     console.log( 'abc' );
     loggerToJstructure.inputUnchain( console );
-    restoreBar();
+    test.suite.consoleBar( 1 );
     var got = loggerToJstructure.outputData;
     var expected =
     [
@@ -219,13 +196,13 @@ function chaining( test )
     test.case = 'case8: input from console twice';
     var loggerToJstructure1 = new wPrinterToJs();
     var loggerToJstructure2 = new wPrinterToJs();
-    removeBar();
+    test.suite.consoleBar( 0 );
     loggerToJstructure1.inputFrom( console );
     loggerToJstructure2.inputFrom( console );
     console.log( 'abc' )
     loggerToJstructure1.inputUnchain( console )
     loggerToJstructure2.inputUnchain( console )
-    restoreBar();
+    test.suite.consoleBar( 1 );
 
     var got =
     [
