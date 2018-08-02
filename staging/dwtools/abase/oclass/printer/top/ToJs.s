@@ -153,6 +153,44 @@ function write()
 
 //
 
+function _transformEnd( o )
+{
+  var self = this;
+
+  _.assert( arguments.length === 1, 'expects single argument' );
+
+  debugger
+
+  o = Parent.prototype._transformEnd.call( self, o );
+
+  if( !o )
+  return;
+
+  _.assert( _.arrayIs( o.outputForTerminal ) );
+  _.assert( o.outputForTerminal.length === 1 );
+
+  var terminal = o.outputForTerminal[ 0 ];
+  if( self.usingTags && _.mapKeys( self.attributes ).length )
+  {
+
+    var text = terminal;
+    terminal = Object.create( null );
+    terminal.text = text;
+
+    for( var t in self.attributes )
+    {
+      terminal[ t ] = self.attributes[ t ];
+    }
+
+  }
+
+  self._currentContainer.push( terminal );
+
+  return o;
+}
+
+//
+
 function levelSet( level )
 {
   var self = this;
@@ -263,6 +301,8 @@ var Proto =
   init : init,
 
   write : write,
+
+  _transformEnd : _transformEnd,
 
   levelSet : levelSet,
 
