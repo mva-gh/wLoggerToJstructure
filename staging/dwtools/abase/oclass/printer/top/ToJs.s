@@ -159,7 +159,7 @@ function _transformEnd( o )
 
   _.assert( arguments.length === 1, 'expects single argument' );
 
-  debugger
+  // debugger
 
   o = Parent.prototype._transformEnd.call( self, o );
 
