@@ -4,6 +4,7 @@
 
 /* qqq : final report disappear after this test suit */
 
+
 if( typeof module !== 'undefined' )
 {
 
@@ -19,7 +20,6 @@ if( typeof module !== 'undefined' )
   var _ = wTools;
 
   _.include( 'wTesting' );
-
 
 }
 
