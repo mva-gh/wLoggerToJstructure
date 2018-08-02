@@ -71,12 +71,15 @@ var toJsStructure = function( test )
 
 function chaining( test )
 {
+  let consoleWasBarred = _.Logger.consoleIsBarred( console );
+
   try
   {
     _chaining();
   }
   catch( err )
   {
+    if( consoleWasBarred )
     test.suite.consoleBar( 1 );
 
     throw _.errLogOnce( err );
@@ -185,6 +188,7 @@ function chaining( test )
     loggerToJstructure.inputFrom( console );
     console.log( 'abc' );
     loggerToJstructure.inputUnchain( console );
+    if( consoleWasBarred )
     test.suite.consoleBar( 1 );
     var got = loggerToJstructure.outputData;
     var expected =
@@ -202,6 +206,7 @@ function chaining( test )
     console.log( 'abc' )
     loggerToJstructure1.inputUnchain( console )
     loggerToJstructure2.inputUnchain( console )
+    if( consoleWasBarred )
     test.suite.consoleBar( 1 );
 
     var got =
