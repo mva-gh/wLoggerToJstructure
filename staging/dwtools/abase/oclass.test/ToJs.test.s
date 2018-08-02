@@ -69,191 +69,159 @@ var toJsStructure = function( test )
 
 //
 
-var chaining = function( test )
+function chaining( test )
 {
+  let consoleWasBarred = _.Logger.consoleIsBarred( console );
 
- /*  var removeBar = () =>
+  try
   {
-    if( !test.suit.silencing )
-    return;
-
-    var logger = _global_.wTester.logger;
-    var barPrinter;
-
-    for( var i = 0; i < console.outputs.length; i++ )
-    {
-      if( console.outputs[ i ].output.name === 'barPrinter' )
-      {
-        _.assert( console.outputs[ i ].exclusiveOutput );
-        barPrinter = console.outputs[ i ].output;
-        break;
-      }
-    }
-
-    logger.consoleBar({ barPrinter : barPrinter, exclusiveOutputPrinter : 0 })
-  };
-
-  var restoreBar = () =>
+    _chaining();
+  }
+  catch( err )
   {
-    if( !test.suit.silencing )
-    return;
+    if( consoleWasBarred )
+    test.suite.consoleBar( 1 );
 
-    var logger = _global_.wTester.logger;
+    throw _.errLogOnce( err );
+  }
 
-    var o = { outputPrinter : logger, exclusiveOutputPrinter : 1 }
-    logger.consoleBar( o );
-    _global_.wTester._barOptions = o;
-  }; */
+  //
 
-  var consoleWasBarred = false;
-
-  var removeBar = () =>
+  function _chaining()
   {
-    if( _.Logger.consoleIsBarred( console ) )
-    {
-      consoleWasBarred = true;
-      debugger
-      _global_.wTester._barOptions.exclusiveOutputPrinter = 0;
-      _.Logger.consoleBar( _global_.wTester._barOptions );
-    }
-  };
 
-  var restoreBar = () =>
-  {
-    _global_.wTester._barOptions = _.Logger.consoleBar({ outputPrinter : _global_.wTester.logger, exclusiveOutputPrinter : 1 });
-    test.is( _.Logger.consoleIsBarred( console ) );
-  };
+    test.case = 'case1';
+    var loggerToJstructure = new wPrinterToJs();
+    var l = new _.Logger({ output : console });
+    l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
+    l.log( 'msg' );
+    var got = loggerToJstructure.outputData;
+    var expected = [ 'msg' ];
+    test.identical( got, expected );
 
-  test.case = 'case1';
-  var loggerToJstructure = new wPrinterToJs();
-  var l = new _.Logger({ output : console });
-  l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
-  l.log( 'msg' );
-  var got = loggerToJstructure.outputData;
-  var expected = [ 'msg' ];
-  test.identical( got, expected );
+    test.case = 'case2';
+    var loggerToJstructure = new wPrinterToJs();
+    var l = new _.Logger({ output : console });
+    l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
+    l.up( 2 );
+    l.log( 'msg' );
+    var got = loggerToJstructure.outputData;
+    var expected = [ '    msg' ];
+    test.identical( got, expected );
 
-  test.case = 'case2';
-  var loggerToJstructure = new wPrinterToJs();
-  var l = new _.Logger({ output : console });
-  l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
-  l.up( 2 );
-  l.log( 'msg' );
-  var got = loggerToJstructure.outputData;
-  var expected = [ '    msg' ];
-  test.identical( got, expected );
-
-  test.case = 'case3';
-  var loggerToJstructure = new wPrinterToJs();
-  var l = new _.Logger({ output : console });
-  l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
-  loggerToJstructure.up( 2 );
-  l.log( 'msg' );
-  var got = loggerToJstructure.outputData;
-  var expected =
-  [
+    test.case = 'case3';
+    var loggerToJstructure = new wPrinterToJs();
+    var l = new _.Logger({ output : console });
+    l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
+    loggerToJstructure.up( 2 );
+    l.log( 'msg' );
+    var got = loggerToJstructure.outputData;
+    var expected =
     [
-      [ 'msg' ]
-    ]
-  ];
-  test.identical( got, expected );
+      [
+        [ 'msg' ]
+      ]
+    ];
+    test.identical( got, expected );
 
-  // test.case = 'case4: Logger->LoggerToJs, leveling on';
-  // var loggerToJstructure = new wPrinterToJs();
-  // var l = new _.Logger({ output : console });
-  // l.outputTo( loggerToJstructure, { combining : 'rewrite', leveling : 'delta' } );
-  // l.log( 'msg' );
-  // l.up( 2 );
-  // l.log( 'msg2' );
-  // var got = loggerToJstructure.outputData;
-  // var expected =
-  // [
-  //   [
-  //      [ '    msg2' ],
-  //   ],
-  //   'msg'
-  // ];
-  // test.identical( got, expected );
+    // test.case = 'case4: Logger->LoggerToJs, leveling on';
+    // var loggerToJstructure = new wPrinterToJs();
+    // var l = new _.Logger({ output : console });
+    // l.outputTo( loggerToJstructure, { combining : 'rewrite', leveling : 'delta' } );
+    // l.log( 'msg' );
+    // l.up( 2 );
+    // l.log( 'msg2' );
+    // var got = loggerToJstructure.outputData;
+    // var expected =
+    // [
+    //   [
+    //      [ '    msg2' ],
+    //   ],
+    //   'msg'
+    // ];
+    // test.identical( got, expected );
 
-  test.case = 'case5 LoggerToJs->LoggerToJs';
-  var loggerToJstructure = new wPrinterToJs();
-  var loggerToJstructure2 = new wPrinterToJs();
-  loggerToJstructure.outputTo( loggerToJstructure2, { combining : 'rewrite' } );
-  loggerToJstructure.log( '1' );
-  loggerToJstructure2.log( '2' );
-  var got =
-  [
-    loggerToJstructure.outputData,
-    loggerToJstructure2.outputData
-  ];
+    test.case = 'case5 LoggerToJs->LoggerToJs';
+    var loggerToJstructure = new wPrinterToJs();
+    var loggerToJstructure2 = new wPrinterToJs();
+    loggerToJstructure.outputTo( loggerToJstructure2, { combining : 'rewrite' } );
+    loggerToJstructure.log( '1' );
+    loggerToJstructure2.log( '2' );
+    var got =
+    [
+      loggerToJstructure.outputData,
+      loggerToJstructure2.outputData
+    ];
 
-  var expected =
-  [
-    [ '1' ],
-    [ '1', '2' ]
-  ];
-  test.identical( got, expected );
+    var expected =
+    [
+      [ '1' ],
+      [ '1', '2' ]
+    ];
+    test.identical( got, expected );
 
-  test.case = 'case6: LoggerToJs->Logger->LoggerToJs';
-  var loggerToJstructure = new wPrinterToJs();
-  var loggerToJstructure2 = new wPrinterToJs();
-  var l = new _.Logger({ output : console });
-  loggerToJstructure.outputTo( l, { combining : 'rewrite' } );
-  l.outputTo( loggerToJstructure2, { combining : 'rewrite' } );
-  l._prefix = '*';
-  debugger
-  loggerToJstructure.log( '1' );
-  var got =
-  [
-    loggerToJstructure.outputData,
-    loggerToJstructure2.outputData
-  ];
+    test.case = 'case6: LoggerToJs->Logger->LoggerToJs';
+    var loggerToJstructure = new wPrinterToJs();
+    var loggerToJstructure2 = new wPrinterToJs();
+    var l = new _.Logger({ output : console });
+    loggerToJstructure.outputTo( l, { combining : 'rewrite' } );
+    l.outputTo( loggerToJstructure2, { combining : 'rewrite' } );
+    l._prefix = '*';
+    debugger
+    loggerToJstructure.log( '1' );
+    var got =
+    [
+      loggerToJstructure.outputData,
+      loggerToJstructure2.outputData
+    ];
 
-  var expected =
-  [
-    [ '1' ],
-    [ '*1' ]
-  ];
-  test.identical( got, expected );
+    var expected =
+    [
+      [ '1' ],
+      [ '*1' ]
+    ];
+    test.identical( got, expected );
 
-  test.case = 'case7: input from console';
-  var loggerToJstructure = new wPrinterToJs();
-  removeBar();
-  loggerToJstructure.inputFrom( console );
-  console.log( 'abc' );
-  loggerToJstructure.inputUnchain( console );
-  restoreBar();
-  var got = loggerToJstructure.outputData;
-  var expected =
-  [
-    'abc'
-  ];
-  test.identical( got, expected );
+    test.case = 'case7: input from console';
+    var loggerToJstructure = new wPrinterToJs();
+    test.suite.consoleBar( 0 );
+    loggerToJstructure.inputFrom( console );
+    console.log( 'abc' );
+    loggerToJstructure.inputUnchain( console );
+    if( consoleWasBarred )
+    test.suite.consoleBar( 1 );
+    var got = loggerToJstructure.outputData;
+    var expected =
+    [
+      'abc'
+    ];
+    test.identical( got, expected );
 
-  test.case = 'case8: input from console twice';
-  var loggerToJstructure1 = new wPrinterToJs();
-  var loggerToJstructure2 = new wPrinterToJs();
-  removeBar();
-  loggerToJstructure1.inputFrom( console );
-  loggerToJstructure2.inputFrom( console );
-  console.log( 'abc' )
-  loggerToJstructure1.inputUnchain( console )
-  loggerToJstructure2.inputUnchain( console )
-  restoreBar();
+    test.case = 'case8: input from console twice';
+    var loggerToJstructure1 = new wPrinterToJs();
+    var loggerToJstructure2 = new wPrinterToJs();
+    test.suite.consoleBar( 0 );
+    loggerToJstructure1.inputFrom( console );
+    loggerToJstructure2.inputFrom( console );
+    console.log( 'abc' )
+    loggerToJstructure1.inputUnchain( console )
+    loggerToJstructure2.inputUnchain( console )
+    if( consoleWasBarred )
+    test.suite.consoleBar( 1 );
 
-  var got =
-  [
-    loggerToJstructure1.outputData,
-    loggerToJstructure2.outputData
-  ];
+    var got =
+    [
+      loggerToJstructure1.outputData,
+      loggerToJstructure2.outputData
+    ];
 
-  var expected =
-  [
-    [ 'abc' ],
-    [ 'abc' ]
-  ];
-  test.identical( got, expected );
-
+    var expected =
+    [
+      [ 'abc' ],
+      [ 'abc' ]
+    ];
+    test.identical( got, expected );
+  }
 }
 
 //
