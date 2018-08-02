@@ -1,8 +1,9 @@
 ( function _ToJs_test_s_( ) {
 
-'use strict'; 
+'use strict';
 
 /* qqq : final report disappear after this test suit */
+
 
 if( typeof module !== 'undefined' )
 {
@@ -20,7 +21,6 @@ if( typeof module !== 'undefined' )
 
   _.include( 'wTesting' );
 
-
 }
 
 var _ = wTools;
@@ -31,14 +31,14 @@ var Self = {};
 
 var toJsStructure = function( test )
 {
-  test.description = 'case1';
+  test.case = 'case1';
   var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.log( '123' );
   var got = loggerToJstructure.outputData;
   var expected = [ '123' ];
   test.identical( got, expected );
 
-  test.description = 'case2';
+  test.case = 'case2';
   var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.up( 2 );
   loggerToJstructure.log( '123' );
@@ -51,14 +51,14 @@ var toJsStructure = function( test )
   ];
   test.identical( got, expected );
 
-  test.description = 'case3';
+  test.case = 'case3';
   var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.log();
   var got = loggerToJstructure.outputData;
   var expected = [ '' ];
   test.identical( got, expected );
 
-  test.description = 'case4';
+  test.case = 'case4';
   var loggerToJstructure  = new wPrinterToJs();
   loggerToJstructure.log( '321');
   var got = loggerToJstructure.toJson();
@@ -78,19 +78,19 @@ var chaining = function( test )
     return;
 
     var logger = _global_.wTester.logger;
-    var barLogger;
+    var barPrinter;
 
     for( var i = 0; i < console.outputs.length; i++ )
     {
-      if( console.outputs[ i ].output.name === 'barLogger' )
+      if( console.outputs[ i ].output.name === 'barPrinter' )
       {
-        _.assert( console.outputs[ i ].barring );
-        barLogger = console.outputs[ i ].output;
+        _.assert( console.outputs[ i ].exclusiveOutput );
+        barPrinter = console.outputs[ i ].output;
         break;
       }
     }
 
-    logger.consoleBar({ barLogger : barLogger, bar : 0 })
+    logger.consoleBar({ barPrinter : barPrinter, exclusiveOutputPrinter : 0 })
   };
 
   var restoreBar = () =>
@@ -100,9 +100,9 @@ var chaining = function( test )
 
     var logger = _global_.wTester.logger;
 
-    var o = { outputLogger : logger, bar : 1 }
+    var o = { outputPrinter : logger, exclusiveOutputPrinter : 1 }
     logger.consoleBar( o );
-    _global_.wTester._bar = o;
+    _global_.wTester._barOptions = o;
   }; */
 
   var consoleWasBarred = false;
@@ -113,29 +113,29 @@ var chaining = function( test )
     {
       consoleWasBarred = true;
       debugger
-      _global_.wTester._bar.bar = 0;
-      _.Logger.consoleBar( _global_.wTester._bar );
+      _global_.wTester._barOptions.exclusiveOutputPrinter = 0;
+      _.Logger.consoleBar( _global_.wTester._barOptions );
     }
   };
 
   var restoreBar = () =>
   {
-    _global_.wTester._bar = _.Logger.consoleBar({ outputLogger : _global_.wTester.logger, bar : 1 });
-    test.shouldBe( _.Logger.consoleIsBarred( console ) );
+    _global_.wTester._barOptions = _.Logger.consoleBar({ outputPrinter : _global_.wTester.logger, exclusiveOutputPrinter : 1 });
+    test.is( _.Logger.consoleIsBarred( console ) );
   };
 
-  test.description = 'case1';
+  test.case = 'case1';
   var loggerToJstructure = new wPrinterToJs();
-  var l = new _.Logger();
+  var l = new _.Logger({ output : console });
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
   l.log( 'msg' );
   var got = loggerToJstructure.outputData;
   var expected = [ 'msg' ];
   test.identical( got, expected );
 
-  test.description = 'case2';
+  test.case = 'case2';
   var loggerToJstructure = new wPrinterToJs();
-  var l = new _.Logger();
+  var l = new _.Logger({ output : console });
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
   l.up( 2 );
   l.log( 'msg' );
@@ -143,9 +143,9 @@ var chaining = function( test )
   var expected = [ '    msg' ];
   test.identical( got, expected );
 
-  test.description = 'case3';
+  test.case = 'case3';
   var loggerToJstructure = new wPrinterToJs();
-  var l = new _.Logger();
+  var l = new _.Logger({ output : console });
   l.outputTo( loggerToJstructure, { combining : 'rewrite' } );
   loggerToJstructure.up( 2 );
   l.log( 'msg' );
@@ -158,9 +158,9 @@ var chaining = function( test )
   ];
   test.identical( got, expected );
 
-  // test.description = 'case4: Logger->LoggerToJs, leveling on';
+  // test.case = 'case4: Logger->LoggerToJs, leveling on';
   // var loggerToJstructure = new wPrinterToJs();
-  // var l = new _.Logger();
+  // var l = new _.Logger({ output : console });
   // l.outputTo( loggerToJstructure, { combining : 'rewrite', leveling : 'delta' } );
   // l.log( 'msg' );
   // l.up( 2 );
@@ -175,7 +175,7 @@ var chaining = function( test )
   // ];
   // test.identical( got, expected );
 
-  test.description = 'case5 LoggerToJs->LoggerToJs';
+  test.case = 'case5 LoggerToJs->LoggerToJs';
   var loggerToJstructure = new wPrinterToJs();
   var loggerToJstructure2 = new wPrinterToJs();
   loggerToJstructure.outputTo( loggerToJstructure2, { combining : 'rewrite' } );
@@ -194,10 +194,10 @@ var chaining = function( test )
   ];
   test.identical( got, expected );
 
-  test.description = 'case6: LoggerToJs->Logger->LoggerToJs';
+  test.case = 'case6: LoggerToJs->Logger->LoggerToJs';
   var loggerToJstructure = new wPrinterToJs();
   var loggerToJstructure2 = new wPrinterToJs();
-  var l = new _.Logger();
+  var l = new _.Logger({ output : console });
   loggerToJstructure.outputTo( l, { combining : 'rewrite' } );
   l.outputTo( loggerToJstructure2, { combining : 'rewrite' } );
   l._prefix = '*';
@@ -216,7 +216,7 @@ var chaining = function( test )
   ];
   test.identical( got, expected );
 
-  test.description = 'case7: input from console';
+  test.case = 'case7: input from console';
   var loggerToJstructure = new wPrinterToJs();
   removeBar();
   loggerToJstructure.inputFrom( console );
@@ -230,7 +230,7 @@ var chaining = function( test )
   ];
   test.identical( got, expected );
 
-  test.description = 'case8: input from console twice';
+  test.case = 'case8: input from console twice';
   var loggerToJstructure1 = new wPrinterToJs();
   var loggerToJstructure2 = new wPrinterToJs();
   removeBar();
@@ -327,7 +327,7 @@ function leveling( test )
 var Proto =
 {
 
-  name : 'LoggerToJs test',
+  name : 'Tools/base/printer/ToJs',
   silencing : 1,
 
   tests :
@@ -344,7 +344,7 @@ var Proto =
 //
 
 _.mapExtend( Self,Proto );
-Self = wTestSuit( Self )
+Self = wTestSuite( Self )
 if( typeof module !== 'undefined' && !module.parent )
 _.Tester.test( Self.name );
 

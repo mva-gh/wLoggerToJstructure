@@ -1,6 +1,6 @@
 (function _ToJs_s_() {
 
-'use strict'; 
+'use strict';
 
 // require
 
@@ -9,11 +9,11 @@ if( typeof module !== 'undefined' )
 
   if( typeof _global_ === 'undefined' || !_global_.wBase )
   {
-    let toolsPath = '../../../../dwtools/Base.s';
+    let toolsPath = '../../../dwtools/Base.s';
     let toolsExternal = 0;
     try
     {
-      require.resolve( toolsPath );
+      toolsPath = require.resolve( toolsPath );
     }
     catch( err )
     {
@@ -24,7 +24,7 @@ if( typeof module !== 'undefined' )
     require( toolsPath );
   }
 
-  var _ = _global_.wTools;
+  var _global = _global_; var _ = _global_.wTools;
 
   _.include( 'wLogger' );
 
@@ -89,7 +89,7 @@ var symbolForLevel = Symbol.for( 'level' );
 
  */
 
-var _ = _global_.wTools;
+var _global = _global_; var _ = _global_.wTools;
 var Parent = _.PrinterTop;
 var Self = function wPrinterToJs( o )
 {
@@ -101,7 +101,7 @@ var Self = function wPrinterToJs( o )
   return Self.prototype.init.apply( this,arguments );
 }
 
-Self.nameShort = 'PrinterToJs';
+Self.shortName = 'PrinterToJs';
 
 //
 
@@ -190,7 +190,7 @@ function levelSet( level )
   else if( dLevel < 0 )
   {
     self._currentContainer = self._currentContainers[ self._currentContainers.length+dLevel ];
-    _.assert( _.arrayLike( self._currentContainer ) || _.objectLike( self._currentContainer ) );
+    _.assert( _.longIs( self._currentContainer ) || _.objectLike( self._currentContainer ) );
     _.assert( self._currentContainers.length >= -dLevel );
     self._currentContainers.splice( self._currentContainers.length+dLevel,self._currentContainers.length );
     if( level === 0 )
@@ -228,7 +228,7 @@ function toJson()
 }
 
 // --
-// relationships
+// relations
 // --
 
 var Composes =
@@ -268,9 +268,9 @@ var Proto =
 
   toJson : toJson,
 
-  // relationships
+  // relations
 
-  constructor : Self,
+  /* constructor * : * Self, */
   Composes : Composes,
   Aggregates : Aggregates,
   Associates : Associates,
@@ -299,14 +299,14 @@ _.accessor
   combining : 'rewrite'
 });
 
-_global_[ Self.name ] = _[ Self.nameShort ] = Self;
+_global_[ Self.name ] = _[ Self.shortName ] = Self;
 
 // --
 // export
 // --
 
 if( typeof module !== 'undefined' )
-if( _global_._UsingWtoolsPrivately_ )
+if( _global_.WTOOLS_PRIVATE )
 delete require.cache[ module.id ];
 
 if( typeof module !== 'undefined' && module !== null )
