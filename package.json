@@ -1,6 +1,6 @@
 {
   "name": "wloggertojstructure",
-  "version": "0.4.27",
+  "version": "0.4.28",
   "enabled": 0,
   "engine": "node >= 6.0.0",
   "description": "The module in JavaScript provides convenient, layered, cross-platform means for multilevel, colorful logging",
