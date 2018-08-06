@@ -2,20 +2,10 @@
 
 'use strict';
 
-/* qqq : final report disappear after this test suit */
-
-
 if( typeof module !== 'undefined' )
 {
 
-  try
-  {
-    require( '../printer/top/ToJs.s' );
-  }
-  catch( err )
-  {
-    require( '../oclass/printer/top/ToJs.s' );
-  }
+  require( '../printer/top/ToJs.s' );
 
   var _ = wTools;
 
@@ -29,7 +19,7 @@ var Self = {};
 
 //
 
-var toJsStructure = function( test )
+function writeToJs( test )
 {
   test.case = 'case1';
   var loggerToJstructure  = new wPrinterToJs();
@@ -226,7 +216,6 @@ function chaining( test )
 
 //
 
-
 function leveling( test )
 {
   var loggerToJstructure = new wPrinterToJs();
@@ -246,6 +235,7 @@ function leveling( test )
       ]
     ]
   ]
+
   test.identical( got,expected )
   loggerToJstructure.level = 0;
   loggerToJstructure.log( 1 );
@@ -272,6 +262,7 @@ function leveling( test )
       ]
     ]
   ]
+
   test.identical( got,expected )
   loggerToJstructure.down( 5 );
   loggerToJstructure.log( 1 );
@@ -301,7 +292,7 @@ var Proto =
   tests :
   {
 
-   toJsStructure : toJsStructure,
+   writeToJs : writeToJs,
    chaining : chaining,
    leveling  : leveling
 
