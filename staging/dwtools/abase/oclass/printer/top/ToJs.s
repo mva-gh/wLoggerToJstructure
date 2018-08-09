@@ -278,7 +278,7 @@ var Composes =
 
 var Aggregates =
 {
-  outputData : [],
+  outputData : _.define.own( [] ),
 }
 
 var Associates =
@@ -288,7 +288,7 @@ var Associates =
 var Restricts =
 {
   _currentContainer : null,
-  _currentContainers : [],
+  _currentContainers : _.define.own( [] ),
 }
 
 // --

@@ -5,7 +5,15 @@
 if( typeof module !== 'undefined' )
 {
 
-  require( '../printer/top/ToJs.s' );
+  try
+  {
+    require( '../printer/top/ToJs.s' );
+  }
+  catch( err )
+  {
+    require( '../oclass/printer/top/ToJs.s' );
+  }
+
 
   var _ = wTools;
 
